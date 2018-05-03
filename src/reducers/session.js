@@ -1,19 +1,18 @@
 import { LOG_IN, LOG_OUT, LOG_IN_FAILURE } from '../actions/SessionActions'
 
-const initialState = {
-  user: null,
-  errorMsg: '',
-}
-
-export default (state = initialState, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case LOG_IN:
-      return {
-        ...state,
-        user: {
-          name: action.payload.name,
-        },
-        errorMsg: '',
+      if (!action.error) {
+        return {
+          ...state,
+          user: action.payload,
+        }
+      } else {
+        return {
+          ...state,
+          error: action.error,
+        }
       }
     case LOG_OUT:
       return {

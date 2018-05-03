@@ -1,8 +1,7 @@
 import axios from 'axios'
+import { ROOT_URL } from '../helpers/constants'
 
 export const FETCH_NEWS = 'FETCH_NEWS'
-
-const ROOT_URL = 'https://mysterious-reef-29460.herokuapp.com/api/v1/'
 
 export function fetchNews() {
   const request = axios.get(`${ROOT_URL}news`)

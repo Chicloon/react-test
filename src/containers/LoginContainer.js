@@ -1,10 +1,10 @@
-//import React from 'react'
+// import React from 'react'
 import { connect } from 'react-redux'
 import { logIn } from '../actions/SessionActions'
 import Login from '../components/Login'
 
 const mapStateToProps = state => ({
-  errorMsg: state.session.errorMsg,
+  session: state.session,
 })
 
 const mapDispatchToProps = dispatch => ({
