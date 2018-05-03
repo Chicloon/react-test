@@ -19,11 +19,8 @@ const renderNews = data => {
 }
 
 const News = ({ data }) => {
-  return (
-    <div className={'news-list'}>
-      {data.length ? renderNews(data) : <p>...loading</p>}
-    </div>
-  )
+  console.log(data)
+  return <div className={'news-list'}>{renderNews(data)}</div>
 }
 
 News.proptypes = {
