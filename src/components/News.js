@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const renderNews = data => {
+const News = ({ data }) => {
   return (
-    <React.Fragment>
+    <div className={'news-list'}>
       <ul style={{ listStyle: 'none' }}>
         {data.map(news => (
           <li key={`news ${news.id}`}>
@@ -14,13 +14,8 @@ const renderNews = data => {
         ))}
       </ul>
       <h5> Всего новостей: {data.length}</h5>
-    </React.Fragment>
+    </div>
   )
-}
-
-const News = ({ data }) => {
-  console.log(data)
-  return <div className={'news-list'}>{renderNews(data)}</div>
 }
 
 News.proptypes = {

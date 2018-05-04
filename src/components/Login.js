@@ -1,157 +1,93 @@
 import React from 'react'
-// import { Link, Redirect } from 'react-router-dom'
-import { Field, reduxForm, SubmissionError } from 'redux-form'
+import { withFormik } from 'formik'
+import { withRouter } from 'react-router'
+import Yup from 'yup'
+import Spinner from '../components/Spinner'
 
-class Login extends React.Component {
-  // async componentDidUpdate() {
-  //   await console.log('Updated', this.props.session)
-  //   if (this.props.session.error) {
-  //     throw new SubmissionError({
-  //       _error: 'Login failed!',
-  //     })
-  //   }
-  // }
+import { LOCAL_STORAGE } from '../helpers/constants'
 
-  asyncValidate = (values /*, dispatch */) => {
-    // return sleep(1000).then(() => {
-    //   // simulate server latency
-    //   if (['john', 'paul', 'george', 'ringo'].includes(values.username)) {
-    //     throw { username: 'That username is taken' }
-    //   }
-    // })
-  }
-
-  submit = values => {
-    const { session } = this.props
-    console.log(this.props.logIn(values))
-    console.log('====session', session)
-
-    // session.payload.then(res => {
-    //   console.log(res)
-    // })
-    if (session.error) {
-      throw new SubmissionError({
-        _error: 'Login failed!',
-      })
+const formikEnhancer = withFormik({
+  mapPropsToValues: () => ({ email: '', password: '' }),
+  validationSchema: Yup.object().shape({
+    email: Yup.string()
+      .email('Invalid email address')
+      .required('Email is required!'),
+  }),
+  handleSubmit: (
+    values,
+    { setErrors, setSubmitting, props: { logIn, history } }
+  ) => {
+    const cb = response => {
+      if (response.status !== 'ok') {
+        values.password = ''
+        setErrors({ email: response.message })
+        setSubmitting(false)
+      } else {
+        setSubmitting(false)
+        localStorage.setItem(LOCAL_STORAGE, response.data.id)
+        history.push('/')
+      }
     }
-  }
+    logIn(values, cb)
+  },
+  displayName: 'Login',
+})
 
-  renderField = ({ input, label, type, meta: { touched, error } }) => (
-    <div>
-      <label>{label}</label>
-      <div>
-        <input {...input} placeholder={label} type={type} />
-        {touched && error && <span>{error}</span>}
-      </div>
-    </div>
+const Login = props => {
+  const {
+    values,
+    errors,
+    dirty,
+    isSubmitting,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    handleReset,
+  } = props
+
+  const errorsValues = Object.values(errors)
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="email" style={{ display: 'block' }}>
+        Email
+      </label>
+      <input
+        id="email"
+        placeholder="Введите e-mail"
+        type="text"
+        value={values.email}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+      <input
+        id="password"
+        placeholder="Введите пароль"
+        type="password"
+        value={values.password}
+        onChange={handleChange}
+        onBlur={handleBlur}
+      />
+
+      <button
+        type="button"
+        className="outline"
+        onClick={handleReset}
+        disabled={!dirty || isSubmitting}
+      >
+        Reset
+      </button>
+      <button type="submit" disabled={isSubmitting}>
+        Submit
+      </button>
+      {isSubmitting && <Spinner />}
+      {errorsValues.length !== 0 && (
+        <ul style={{ listStyle: 'none', color: 'red' }}>
+          {errorsValues.map(error => <li key={error}>{error}</li>)}
+        </ul>
+      )}
+    </form>
   )
-  render() {
-    const { error, handleSubmit, pristine, reset, submitting } = this.props
-    return (
-      <form onSubmit={handleSubmit(this.submit)}>
-        <Field
-          name="username"
-          type="text"
-          component={this.renderField}
-          label="Username"
-        />
-        <Field
-          name="password"
-          type="password"
-          component={this.renderField}
-          label="Password"
-        />
-        {error && <strong>{error}</strong>}
-        <div>
-          <button type="submit" disabled={submitting}>
-            Log In
-          </button>
-          <button
-            type="button"
-            disabled={pristine || submitting}
-            onClick={reset}
-          >
-            Clear Values
-          </button>
-        </div>
-      </form>
-    )
-  }
 }
 
-export default reduxForm({
-  form: 'loginForm', // a unique identifier for this form
-})(Login)
-
-// class Login extends React.Component {
-//   state = {
-//     redirectToPreviousRoute: false,
-//     username: '',
-//     password: '',
-//   }
-
-//   handleSubmit = e => {
-//     e.preventDefault()
-//     const { username, password } = this.state
-
-//     this.props.logIn(
-//       {
-//         username,
-//         password,
-//       },
-//       () => {
-//         this.setState({ redirectToPreviousRoute: true })
-//       }
-//     )
-//   }
-
-//   handleChange = e => {
-//     const value = e.currentTarget.value
-//     const fieldName = e.currentTarget.dataset.fieldName
-
-//     this.setState(prev => ({
-//       ...prev,
-//       [fieldName]: value,
-//     }))
-//   }
-
-//   render() {
-//     const { location, errorMsg } = this.props
-//     const { from } = location.state || { from: { pathname: '/' } }
-//     const { username, password, redirectToPreviousRoute } = this.state
-
-//     if (redirectToPreviousRoute) {
-//       return <Redirect to={from} />
-//     }
-
-//     return (
-//       <div>
-//         {errorMsg && <p>{errorMsg}</p>}
-//         <form onSubmit={this.handleSubmit}>
-//           <input
-//             data-field-name={'username'}
-//             type={'text'}
-//             onChange={this.handleChange}
-//             placeholder={'Имя'}
-//             value={username}
-//           />
-//           <input
-//             data-field-name={'password'}
-//             type={'text'}
-//             onChange={this.handleChange}
-//             placeholder={'Пароль'}
-//             value={password}
-//           />
-//           <button type="submit">Log in</button>
-//         </form>
-//       </div>
-//     )
-//   }
-// }
-
-// Login.propTypes = {
-//   logIn: PropTypes.func.isRequired,
-//   errorMsg: PropTypes.string,
-// }
-
-// export default Login
+export default withRouter(formikEnhancer(Login))

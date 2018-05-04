@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import News from '../components/News'
 import { fetchNews } from '../actions/NewsActions'
+import Spinner from '../components/Spinner'
 
 class NewsContainer extends React.Component {
   componentDidMount() {
@@ -17,7 +18,7 @@ class NewsContainer extends React.Component {
     if (data.error) {
       return <h4 style={{ color: 'red' }}> {data.error.message}</h4>
     }
-    return <p> ....loading </p>
+    return <Spinner />
   }
 }
 

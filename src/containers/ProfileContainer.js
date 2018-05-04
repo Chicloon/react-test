@@ -1,18 +1,30 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Profile from '../components/Profile'
+import { LOCAL_STORAGE } from '../helpers/constants'
+import { fetchProfile } from '../actions/ProfileActions'
+import Spinner from '../components/Spinner'
 
 class ProfileContainer extends React.Component {
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(fetchProfile(localStorage.getItem(LOCAL_STORAGE)))
+  }
+
   render() {
-    const { user } = this.props
-    return <Profile user={user} />
+    const { profile } = this.props
+    if (profile.data) {
+      return <Profile data={profile.data} />
+    }
+    if (profile.error) {
+      return <h4 style={{ color: 'red' }}> {profile.error.message}</h4>
+    }
+    return <Spinner />
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.session.user,
+  profile: state.profile,
 })
 
-const mapDispatchToProps = dispatch => ({})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer)
+export default connect(mapStateToProps)(ProfileContainer)
