@@ -6,7 +6,6 @@ export const LOG_OUT = 'LOG_OUT'
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE'
 
 export function logIn(params, cb) {
-  console.log(params)
   const request = axios.post(`${ROOT_URL}validate`, {
     ...params,
   })
@@ -32,8 +31,11 @@ export function logIn(params, cb) {
   }
 }
 
-export function logOut() {
-  return {
-    type: LOG_OUT,
+export function logOut(cb) {
+  return dispatch => {
+    dispatch({
+      type: LOG_OUT,
+    })
+    cb()
   }
 }

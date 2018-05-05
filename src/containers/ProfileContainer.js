@@ -7,14 +7,18 @@ import Spinner from '../components/Spinner'
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(fetchProfile(localStorage.getItem(LOCAL_STORAGE)))
+    const { dispatch, user } = this.props
+    dispatch(fetchProfile(user.data.id))
   }
 
   render() {
     const { profile } = this.props
-    if (profile.data) {
-      return <Profile data={profile.data} />
+    if (profile.profile) {
+      if (profile.profile.status === 'ok') {
+        return <Profile profile={profile.profile.data} />
+      } else {
+        return <h4 style={{ color: 'red' }}>Пользователь не найден</h4>
+      }
     }
     if (profile.error) {
       return <h4 style={{ color: 'red' }}> {profile.error.message}</h4>
@@ -25,6 +29,7 @@ class ProfileContainer extends React.Component {
 
 const mapStateToProps = state => ({
   profile: state.profile,
+  user: state.session.user,
 })
 
 export default connect(mapStateToProps)(ProfileContainer)

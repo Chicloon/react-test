@@ -9,7 +9,8 @@ import reducer from './reducers'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 
-import './index.css'
+// import './index.css'
+import 'semantic-ui-css/semantic.min.css'
 
 const middleware = [thunk]
 if (process.env.NODE_ENV !== 'production') {

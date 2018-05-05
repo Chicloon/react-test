@@ -5,7 +5,6 @@ export const PROFILE = 'PROFILE'
 
 export function fetchProfile(id) {
   const request = axios.get(`${ROOT_URL}user-info/${id}`)
-  console.log('got id', id)
   return dispatch => {
     request
       .then(data => {

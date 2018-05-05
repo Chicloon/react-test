@@ -5,7 +5,7 @@ export default (state = {}, action) => {
     case PROFILE:
       if (action.payload) {
         return {
-          profile: action.payload.data,
+          profile: action.payload,
           error: null,
         }
       } else {

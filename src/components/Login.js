@@ -20,12 +20,20 @@ const formikEnhancer = withFormik({
     const cb = response => {
       if (response.status !== 'ok') {
         values.password = ''
-        setErrors({ email: response.message })
+        switch (response.message) {
+          case 'wrong_email_or_password':
+            setErrors({ email: 'Имя пользователя или пароль введены не верно' })
+            break
+          case 'Network Error':
+            setErrors({ email: 'Сервер не доступен' })
+            break
+          default:
+            setErrors({ email: response.message })
+        }
         setSubmitting(false)
       } else {
         setSubmitting(false)
-        localStorage.setItem(LOCAL_STORAGE, response.data.id)
-        history.push('/')
+        history.push('/profile')
       }
     }
     logIn(values, cb)
