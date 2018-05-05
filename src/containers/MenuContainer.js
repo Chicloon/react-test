@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchNews } from '../actions/NewsActions'
 import LinkBtn from '../components/LinkBtn'
 import { logOut } from '../actions/SessionActions'
 import { Button } from 'semantic-ui-react'

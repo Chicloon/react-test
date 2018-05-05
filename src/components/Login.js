@@ -4,8 +4,6 @@ import { withRouter } from 'react-router'
 import Yup from 'yup'
 import Spinner from '../components/Spinner'
 
-import { LOCAL_STORAGE } from '../helpers/constants'
-
 const formikEnhancer = withFormik({
   mapPropsToValues: () => ({ email: '', password: '' }),
   validationSchema: Yup.object().shape({

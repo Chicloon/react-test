@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Profile from '../components/Profile'
-import { LOCAL_STORAGE } from '../helpers/constants'
 import { fetchProfile } from '../actions/ProfileActions'
 import Spinner from '../components/Spinner'
 
