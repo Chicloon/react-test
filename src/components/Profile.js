@@ -16,7 +16,6 @@ const renderLanguages = languages => (
 )
 const renderSocial = social => {
   const webLabel = social.filter(el => el.label === 'web')[0]
-  console.log(webLabel)
   return (
     <List.List>
       <List.Item>
@@ -43,7 +42,6 @@ const renderSocial = social => {
 }
 
 const Profile = ({ profile }) => {
-  console.log(profile)
   const { city, languages, social } = profile
 
   return (
