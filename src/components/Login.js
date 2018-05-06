@@ -8,40 +8,26 @@ const formikEnhancer = withFormik({
   mapPropsToValues: () => ({ email: '', password: '' }),
   validationSchema: Yup.object().shape({
     email: Yup.string()
-      .email('Invalid email address')
-      .required('Email is required!'),
+      .email('Неверный email!')
+      .required('Email обязателен!'),
+    password: Yup.string()
+      // eslint-disable-next-line no-template-curly-in-string
+      .min(3, 'Пароль должен содежать минимум ${min} символа')
+      .required('Пароль обязателен!'),
   }),
   handleSubmit: async (
     values,
-    { setErrors, setSubmitting, props: { logIn, history, loginError } }
+    { setErrors, setSubmitting, props: { logIn, history } }
   ) => {
-    // const cb = response => {
-    //   if (response.status !== 'ok') {
-    //     values.password = ''
-    //     switch (response.message) {
-    //       case 'wrong_email_or_password':
-    //         setErrors({ email: 'Имя пользователя или пароль введены не верно' })
-    //         break
-    //       case 'Network Error':
-    //         setErrors({ email: 'Сервер не доступен' })
-    //         break
-    //       default:
-    //         setErrors({ email: response.message })
-    //     }
-    //     setSubmitting(false)
-    //   } else {
-    //     setSubmitting(false)
-    //     history.push('/profile')
-    //   }
-    // }
-
-    console.log(values)
     const response = await logIn(values)
     if (response) {
       values.password = ''
       setErrors({ email: response })
+      setSubmitting(false)
+    } else {
+      setSubmitting(false)
+      history.push('/profile')
     }
-    setSubmitting(false)
   },
   displayName: 'Login',
 })
@@ -56,7 +42,6 @@ const Login = props => {
     handleBlur,
     handleSubmit,
     handleReset,
-    loginError,
   } = props
 
   const errorsValues = Object.values(errors)
