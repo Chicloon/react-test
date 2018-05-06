@@ -34,7 +34,9 @@ const formikEnhancer = withFormik({
         history.push('/profile')
       }
     }
-    logIn(values, cb)
+    console.log(values)
+    setSubmitting(false)
+    // logIn(values, cb)
   },
   displayName: 'Login',
 })
@@ -52,6 +54,8 @@ const Login = props => {
   } = props
 
   const errorsValues = Object.values(errors)
+
+  console.log(props)
 
   return (
     <form onSubmit={handleSubmit}>

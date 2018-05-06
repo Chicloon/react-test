@@ -1,7 +1,7 @@
-import users from './Users'
+import user from './User'
 
 const stores = {
-  users,
+  user,
 }
 
 export default stores

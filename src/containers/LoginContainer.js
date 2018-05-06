@@ -1,14 +1,10 @@
-// import React from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { logIn } from '../actions/SessionActions'
 import Login from '../components/Login'
 
-const mapStateToProps = state => ({
-  session: state.session,
-})
+const LoginContainer = props => {
+  return <Login />
+}
 
-const mapDispatchToProps = dispatch => ({
-  logIn: (params, cb) => dispatch(logIn(params, cb)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default LoginContainer
