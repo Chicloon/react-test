@@ -8,7 +8,7 @@ import { createLogger } from 'redux-logger'
 import reducer from './reducers'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
-
+import stores from './stores'
 // import './index.css'
 import 'semantic-ui-css/semantic.min.css'
 

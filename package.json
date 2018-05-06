@@ -2,9 +2,15 @@
   "name": "forge",
   "version": "0.1.0",
   "private": true,
+  "babel": {
+    "plugins": ["babel-plugin-transform-decorators-legacy"],
+    "presets": ["react-app"]
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "formik": "^0.11.11",
+    "mobx": "^4.2.1",
+    "mobx-react": "^5.1.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-icons": "^2.2.7",
@@ -33,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "husky": "^0.14.3",
