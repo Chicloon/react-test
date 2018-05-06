@@ -4,42 +4,30 @@ import axios from 'axios';
 
 import {ROOT_URL} from '../helpers/constants';
 
-class User {
-  @observable isLoading = false;
-  @observable signedIn = false;
-  @observable error = null;
+class User {  
   @observable id = null;
 
-
-  loading = () => this.isLoading = !this.isLoading;
-
   @action async logIn(params) {
-    console.log('====this ',this)
-    this.loading();
+    let error;
 
     const request = await axios.post(`${ROOT_URL}validate`, {
-      // email: 'max@test.com', password:'12345'
       ...params
     })
       .then(res=>res)
       .catch(err=>{        
-        this.error = err.message === 'Network Error' ? 'Сервер не доступен' : err.message        
+        error = err.message === 'Network Error' ? 'Сервер не доступен' : err.message             
       })
     
-    if(request) {
+    if(request) {      
       const {data}=request      
       if(data.status === 'err') {
-        this.error = 'Имя пользователя или пароль введены не верно'
-        this.loading()        
-        return         
+        error = 'Имя пользователя или пароль введены не верно'
+      } else {
+        this.id = data.data.id
       }
-      this.id = data.data.id
-      this.loading()
-    }    
+    }        
+    return error;
   }
-
-
-
 }
 
 export default new User()

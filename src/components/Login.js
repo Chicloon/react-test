@@ -34,14 +34,13 @@ const formikEnhancer = withFormik({
     //     history.push('/profile')
     //   }
     // }
-    console.error('LoginError', loginError)
-    if (loginError) {
-      setErrors({ email: loginError })
-      setSubmitting(false)
-    }
+
     console.log(values)
-    const resp = await logIn(values)
-    console.log(resp)
+    const response = await logIn(values)
+    if (response) {
+      values.password = ''
+      setErrors({ email: response })
+    }
     setSubmitting(false)
   },
   displayName: 'Login',
@@ -58,17 +57,9 @@ const Login = props => {
     handleSubmit,
     handleReset,
     loginError,
-    setErrors,
   } = props
 
-  let errorsValues = Object.values(errors)
-  console.log(errorsValues)
-
-  console.log(props)
-  if (loginError) {
-    console.error('got error in form')
-    errorsValues = [loginError]
-  }
+  const errorsValues = Object.values(errors)
 
   return (
     <form onSubmit={handleSubmit}>
@@ -100,7 +91,7 @@ const Login = props => {
       >
         Reset
       </button>
-      <button type="submit" disabled={isSubmitting}>
+      <button type="submit" disabled={!dirty || isSubmitting}>
         Submit
       </button>
       {isSubmitting && <Spinner />}
