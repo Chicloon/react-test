@@ -3,18 +3,14 @@ import { connect } from 'react-redux'
 import LinkBtn from '../components/LinkBtn'
 import { logOut } from '../actions/SessionActions'
 import { Button } from 'semantic-ui-react'
-import { withRouter } from 'react-router'
 
 class MenuContainer extends React.Component {
   renderExitButton = () => {
-    const { user, logOut, history } = this.props
-    const redirectHome = () => {
-      history.push('/')
-    }
+    const { user, logOut } = this.props
 
     if (user && user.data) {
       return (
-        <Button secondary onClick={() => logOut(redirectHome)}>
+        <Button secondary onClick={() => logOut()}>
           Выйти
         </Button>
       )
@@ -24,7 +20,6 @@ class MenuContainer extends React.Component {
 
   render() {
     const { user } = this.props
-    console.log(this.props)
     return (
       <React.Fragment>
         <LinkBtn to="/login" label={'Логин'} />
@@ -41,9 +36,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  logOut: cb => dispatch(logOut(cb)),
+  logOut: () => dispatch(logOut()),
 })
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(MenuContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(MenuContainer)

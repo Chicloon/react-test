@@ -31,11 +31,10 @@ export function logIn(params, cb) {
   }
 }
 
-export function logOut(cb) {
+export function logOut(b) {
   return dispatch => {
     dispatch({
       type: LOG_OUT,
     })
-    cb()
   }
 }
