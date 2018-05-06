@@ -11,32 +11,38 @@ const formikEnhancer = withFormik({
       .email('Invalid email address')
       .required('Email is required!'),
   }),
-  handleSubmit: (
+  handleSubmit: async (
     values,
-    { setErrors, setSubmitting, props: { logIn, history } }
+    { setErrors, setSubmitting, props: { logIn, history, loginError } }
   ) => {
-    const cb = response => {
-      if (response.status !== 'ok') {
-        values.password = ''
-        switch (response.message) {
-          case 'wrong_email_or_password':
-            setErrors({ email: 'Имя пользователя или пароль введены не верно' })
-            break
-          case 'Network Error':
-            setErrors({ email: 'Сервер не доступен' })
-            break
-          default:
-            setErrors({ email: response.message })
-        }
-        setSubmitting(false)
-      } else {
-        setSubmitting(false)
-        history.push('/profile')
-      }
+    // const cb = response => {
+    //   if (response.status !== 'ok') {
+    //     values.password = ''
+    //     switch (response.message) {
+    //       case 'wrong_email_or_password':
+    //         setErrors({ email: 'Имя пользователя или пароль введены не верно' })
+    //         break
+    //       case 'Network Error':
+    //         setErrors({ email: 'Сервер не доступен' })
+    //         break
+    //       default:
+    //         setErrors({ email: response.message })
+    //     }
+    //     setSubmitting(false)
+    //   } else {
+    //     setSubmitting(false)
+    //     history.push('/profile')
+    //   }
+    // }
+    console.error('LoginError', loginError)
+    if (loginError) {
+      setErrors({ email: loginError })
+      setSubmitting(false)
     }
     console.log(values)
+    const resp = await logIn(values)
+    console.log(resp)
     setSubmitting(false)
-    // logIn(values, cb)
   },
   displayName: 'Login',
 })
@@ -51,11 +57,18 @@ const Login = props => {
     handleBlur,
     handleSubmit,
     handleReset,
+    loginError,
+    setErrors,
   } = props
 
-  const errorsValues = Object.values(errors)
+  let errorsValues = Object.values(errors)
+  console.log(errorsValues)
 
   console.log(props)
+  if (loginError) {
+    console.error('got error in form')
+    errorsValues = [loginError]
+  }
 
   return (
     <form onSubmit={handleSubmit}>

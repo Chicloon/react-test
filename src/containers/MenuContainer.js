@@ -22,9 +22,9 @@ class MenuContainer extends React.Component {
   //   return <LinkBtn to="/login" label={'Войти'} />
   // }
 
-  componentWillMount() {
-    this.props.user.logIn()
-  }
+  // componentWillMount() {
+  //   this.props.user.logIn()
+  // }
 
   render() {
     // const { user } = this.props
