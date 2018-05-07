@@ -13,9 +13,7 @@ class NewsContainer extends React.Component {
   }
 
   render() {
-    const {news: {news, isLoading, error}}=this.props
-    console.log(isLoading)
-    console.log(news);
+    const {news: {news, isLoading, error}}=this.props  
 
     if (!error && !isLoading) {
       return <News data={news} />
