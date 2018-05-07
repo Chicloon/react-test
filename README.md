@@ -1,17 +1,4 @@
-## Репозиторий с тестовыми заданиями
+## Репозиторий тестового задания (https://vk.com/@maxpfrontend-testovoe-zadanie-2)
 
-Здесь есть список решений типовых (настоящих) тестовых заданий, которые разбираются на стриме.
-
-#### Список заданий
-
-[1. Проверяем начальные знания react, redux, react-router](https://github.com/maxfarseer/tz-webinars/tree/tz-1-react-redux-react-router)
-
-Из интересного - `redirect` после `dispatch`
-
----
-
-Расписания вебинаров и прочая полезная информация:
-+ [Twitch](https://www.twitch.tv/maxpfrontend)
-+ [t.me/maxpfrontend](https://t.me/maxpfrontend)
-+ [vk/maxpfrontend](http://vk.com/maxpfrontend)
-+ [twitter](https://twitter.com/MaxPatsiansky)
+В ветке [mobx-version](https://github.com/Chicloon/react-test/tree/mobx-version) лежит вариант решения с использованием MobX
+В ветке [redux-version](https://github.com/Chicloon/react-test/tree/redux-version) лежит вариант решения с использованием Redux
