@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const News = ({ data }) => {
+  console.log(data)
   return (
     <div className={'news-list'}>
       <ul style={{ listStyle: 'none' }}>

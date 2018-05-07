@@ -1,22 +1,28 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import News from '../components/News'
-import { fetchNews } from '../actions/NewsActions'
+import {inject, observer} from 'mobx-react'
+
 import Spinner from '../components/Spinner'
 
-import { inject, observer } from 'mobx-react'
-
-@observer(['users'])
+@inject('news')
+@observer
 class NewsContainer extends React.Component {
-  render() {
-    console.log(this.props)
 
-    // if (data.data) {
-    //   return <News data={data.data} />
-    // }
-    // if (data.error) {
-    //   return <h4 style={{ color: 'red' }}> {data.error.message}</h4>
-    // }
+  componentWillMount() {
+    this.props.news.fetchNews()
+  }
+
+  render() {
+    const {news: {news, isLoading, error}}=this.props
+    console.log(isLoading)
+    console.log(news);
+
+    if (!error && !isLoading) {
+      return <News data={news} />
+    }
+    if (error) {
+      return <h4 style={{ color: 'red' }}> {error}</h4>
+    }
     return <Spinner />
   }
 }

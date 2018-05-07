@@ -14,30 +14,22 @@ const renderLanguages = languages => (
     ))}
   </List.List>
 )
-const renderSocial = social => {
-  const webLabel = social.filter(el => el.label === 'web')[0]
+const renderSocial = social => {  
   return (
     <List.List>
-      <List.Item>
-        <List.Content>
-          <a href={webLabel.link} target="_blank">
-            <List.Icon name="globe" size="big" />
-          </a>
-        </List.Content>
-      </List.Item>
-      {social.map(el => {
-        if (el.label !== 'web') {
-          return (
-            <List.Content key={`social-${el.label}`}>
+      {
+        social.map(el=> (
+          <List.Item key={`social-${el.label}`}>        
+            <List.Content>
               <a href={el.link} target="_blank">
-                <List.Icon size="big" name={el.label} />
+                <List.Icon size="big" name={el.label === "web" ? "globe": el.label} />
               </a>
             </List.Content>
+          </List.Item>
           )
-        }
-        return null
-      })}
-    </List.List>
+        )
+      } 
+    </List.List>       
   )
 }
 
@@ -74,8 +66,7 @@ const Profile = ({ profile }) => {
 }
 
 Profile.proptypes = {
-  profile: PropTypes.shape({
-    useiId: PropTypes.number.isRequired,
+  profile: PropTypes.shape({   
     city: PropTypes.string.isRequired,
     languages: PropTypes.array.isRequired,
     social: PropTypes.array.isRequired,

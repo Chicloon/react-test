@@ -1,13 +1,14 @@
 import React from 'react'
 import Login from '../components/Login'
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
-@observer(['user'])
+@inject('user')
+@observer
 class LoginContainer extends React.Component {
-  
-  logIn = async (values)=>  await this.props.user.logIn(values)    
 
-  render() { 
+  logIn = async (values) => await this.props.user.logIn(values)
+
+  render() {
     return <Login logIn={this.logIn} />
   }
 }

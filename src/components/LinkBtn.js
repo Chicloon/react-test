@@ -9,7 +9,7 @@ const LinkBtn = ({ to, label }) => {
       <Button primary>
         <span>{label}</span>
       </Button>
-    </Link>
+    </Link >
   )
 }
 

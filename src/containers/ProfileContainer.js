@@ -1,34 +1,29 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import Profile from '../components/Profile'
-import { fetchProfile } from '../actions/ProfileActions'
 import Spinner from '../components/Spinner'
+import {inject, observer} from 'mobx-react'
 
+@inject('user')
+@observer
 class ProfileContainer extends React.Component {
+
   componentDidMount() {
-    const { dispatch, user } = this.props
-    dispatch(fetchProfile(user.data.id))
+    this.props.user.fetchProfile(this.props.user.id)
   }
 
   render() {
-    const { profile } = this.props
-    if (profile.profile) {
-      if (profile.profile.status === 'ok') {
-        return <Profile profile={profile.profile.data} />
-      } else {
-        return <h4 style={{ color: 'red' }}>Пользователь не найден</h4>
-      }
+    const {user} = this.props;
+
+    if (user.error) {
+      return <h4 style={{ color: 'red' }}>{user.error}</h4>
     }
-    if (profile.error) {
-      return <h4 style={{ color: 'red' }}> {profile.error.message}</h4>
+    
+    if(!user.isLoading && user.profile) {
+      return <Profile profile={user.profile} />
     }
+    
     return <Spinner />
   }
 }
 
-const mapStateToProps = state => ({
-  profile: state.profile,
-  user: state.session.user,
-})
-
-export default connect(mapStateToProps)(ProfileContainer)
+export default ProfileContainer

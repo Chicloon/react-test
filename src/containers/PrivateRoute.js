@@ -1,31 +1,19 @@
-import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import { connect } from 'react-redux'
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        rest.isAuth ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: props.location },
-            }}
-          />
-        )
-      }
-    />
-  )
-}
+@inject('user')
+@observer
 
-const mapStateToProps = state => {
-  return {
-    isAuth: state.session.user && state.session.user.data,
+class PrivateRoute extends React.Component {
+  render() {
+    const {user, path, component} = this.props;
+    if (user.id) {
+      return <Route path={path} component={component} />
+    }
+
+    return <Redirect to="/login"/>
   }
 }
 
-export default connect(mapStateToProps)(PrivateRoute)
+export default PrivateRoute

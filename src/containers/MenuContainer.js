@@ -1,45 +1,33 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import LinkBtn from '../components/LinkBtn'
-import { logOut } from '../actions/SessionActions'
 import { Button } from 'semantic-ui-react'
-import {observer} from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 
-import Spinner from '../components/Spinner';
-
-@observer(['user'])
+@inject('user')
+@observer
 class MenuContainer extends React.Component {
-  // renderExitButton = () => {
-  //   const { user, logOut } = this.props
+  renderExitButton = () => {
+    const { user } = this.props
 
-  //   if (user && user.data) {
-  //     return (
-  //       <Button secondary onClick={() => logOut()}>
-  //         Выйти
-  //       </Button>
-  //     )
-  //   }
-  //   return <LinkBtn to="/login" label={'Войти'} />
-  // }
-
-  // componentWillMount() {
-  //   this.props.user.logIn()
-  // }
+    if (user.id) {
+      return (
+        <Button secondary onClick={() => user.logOut()}>
+          Выйти
+        </Button>
+      )
+    }
+    return <LinkBtn to="/login" label={'Войти'} />
+  }
 
   render() {
-    // const { user } = this.props
-    console.log(this.props);
-    if (this.props.user.isLoading) {
-      console.log('...loading')
-      return <Spinner />
-    }
+    const { user } = this.props
+    
     return (
       <React.Fragment>
-        
         <LinkBtn to="/login" label={'Логин'} />
-        {/* <LinkBtn to="/news" label={'Новости'} />
-        {user && user.data && <LinkBtn to="/profile" label={'Профиль'} />}
-        {this.renderExitButton()} */}
+        <LinkBtn to="/news" label={'Новости'} />
+        {user.id && <LinkBtn to="/profile" label={'Профиль'} />}
+        {this.renderExitButton()}
       </React.Fragment>
     )
   }

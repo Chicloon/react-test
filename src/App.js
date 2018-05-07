@@ -23,9 +23,9 @@ const App = () => (
     <div className="content">
       <Switch>
         <Redirect exact from="/" to="/login" />
-        {/* <Route path="/news" component={NewsContainer} /> */}
+        <Route path="/news" component={NewsContainer} />
         <Route path="/login" component={LoginContainer} />
-        {/* <PrivateRoute path="/profile" component={ProfileContainer} /> */}
+        <PrivateRoute path="/profile" component={ProfileContainer} />
         <Route component={NotFound} />
       </Switch>
     </div>
