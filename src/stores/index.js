@@ -1,9 +1,7 @@
-import user from './User'
-import news from './News'
+import list from './List'
 
 const stores = {
-  user,
-  news
+  list,
 }
 
 export default stores
