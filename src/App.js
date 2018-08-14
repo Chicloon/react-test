@@ -6,6 +6,7 @@ import MenuContainer from './containers/MenuContainer'
 import ProfileContainer from './containers/ProfileContainer'
 import NewsContainer from './containers/NewsContainer'
 import NotFound from './components/NotFound'
+import TestComponent from './components/TestComponent'
 
 import './App.css'
 
@@ -22,7 +23,8 @@ const App = () => (
     <hr />
     <div className="content">
       <Switch>
-        <Redirect exact from="/" to="/login" />
+        {/* <Redirect exact from="/" to="/login" /> */}
+        <Route path="/" component={TestComponent} />
         <Route path="/news" component={NewsContainer} />
         <Route path="/login" component={LoginContainer} />
         <PrivateRoute path="/profile" component={ProfileContainer} />

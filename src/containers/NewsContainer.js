@@ -13,15 +13,24 @@ class NewsContainer extends React.Component {
   }
 
   render() {
-    const {news: {news, isLoading, error}}=this.props  
+    return (
+    <div> 
+    map will go here
 
-    if (!error && !isLoading) {
-      return <News data={news} />
-    }
-    if (error) {
-      return <h4 style={{ color: 'red' }}> {error}</h4>
-    }
-    return <Spinner />
+    </div>
+      
+    )
+
+
+    // const {news: {news, isLoading, error}}=this.props  
+
+    // if (!error && !isLoading) {
+    //   return <News data={news} />
+    // }
+    // if (error) {
+    //   return <h4 style={{ color: 'red' }}> {error}</h4>
+    // }
+    // return <Spinner />
   }
 }
 
